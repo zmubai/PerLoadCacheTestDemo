@@ -13,6 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @protocol BNNetManagerProtocol <NSObject>
 @optional
+/*网络代理类，可创建代理类对网络回调进行处理*/
 - (void)processCache:(_Nullable id)cache callBackBlock:(BNNetCacheBlock)callBackBlock;
 - (void)processResponseObj:(_Nullable id)obj callBackBlock:(BNNetProcessBlock)callBackBlock;
 - (void)processError:(NSError * _Nonnull )error callBackBlock:(BNNetProcessBlock)callBackBlock;

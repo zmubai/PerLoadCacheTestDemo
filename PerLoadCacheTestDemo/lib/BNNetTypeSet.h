@@ -12,8 +12,8 @@
 typedef NS_OPTIONS(NSUInteger, BNNetCacheOption) {
     BNNetCacheOptionUnUse = 1 << 0,
     BNNetCacheOptionUse = 1 << 1,
-    BNNetCacheOptionPerLoad = 1 << 2,
-    BNNetCacheOptionIgnoreNetCallBackWhenCacheRespondEqualNetRespond = 1 << 3,
+    BNNetCacheOptionPerLoad = 1 << 2,/*预加载*/
+    BNNetCacheOptionIgnoreNetCallBackWhenCacheRespondEqualNetRespond = 1 << 3,/*缓存数据与网络数据一致时，忽略网络数据回调*/
 };
 
 typedef void (^BNNetCacheBlock)(_Nullable id responseObj);

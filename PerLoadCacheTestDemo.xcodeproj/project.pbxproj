@@ -116,10 +116,18 @@
 				BB383499228033D9006B245C /* BNHTTPManager.h */,
 				BB383498228033D8006B245C /* BNHTTPManager.m */,
 				BB38349B228033DC006B245C /* BNNetTypeSet.h */,
+				BB3834A222804298006B245C /* cacheManager */,
+			);
+			path = lib;
+			sourceTree = "<group>";
+		};
+		BB3834A222804298006B245C /* cacheManager */ = {
+			isa = PBXGroup;
+			children = (
 				BB383495228033D5006B245C /* BNNetCacheManager.h */,
 				BB383494228033D4006B245C /* BNNetCacheManager.m */,
 			);
-			path = lib;
+			path = cacheManager;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
