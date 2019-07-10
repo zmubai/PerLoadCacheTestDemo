@@ -8,6 +8,7 @@
 
 #import "ViewController.h"
 #import "lib/BNNetManager.h"
+#import "BNNetCacheManager.h"
 
 @interface ViewController ()
 
@@ -17,6 +18,10 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+
+    //清空加载清单， 重新设定加载顺序
+    [[BNNetCacheManager sharedManager]clearPrecedenceLoadKeys];
+
     NSString *url = @"http://www.douban.com/j/app/radio/channels";
     [[BNNetManager sharedManager] get:url params:nil cacheOption:(BNNetCacheOptionUse | BNNetCacheOptionPerLoad | BNNetCacheOptionIgnoreNetCallBackWhenCacheRespondEqualNetRespond) cache:^(id  _Nullable responseObj) {
         NSLog(@"cache obj :%@",responseObj);
