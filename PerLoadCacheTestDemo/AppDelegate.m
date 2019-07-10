@@ -7,7 +7,7 @@
 //
 
 #import "AppDelegate.h"
-#import "lib/BNNetCacheManager.h"
+#import "BNNetCacheManager.h"
 
 @interface AppDelegate ()
 

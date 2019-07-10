@@ -21,6 +21,11 @@ typedef void(^BNNetCacheResultBlock)(NSDictionary *cacheDictionary);
 @property (nonatomic, strong, readonly) YYCache *yyCacheInstace;
 + (instancetype)sharedManager;
 
+
+/**
+ 清除用于加载的keys，重新执行registerPrecedenceLoadKeyUrl，会从头插入
+ */
+- (void)clearPrecedenceLoadKeys;
 /**
  预加载注册方法
 

@@ -76,9 +76,16 @@ static NSString *BNCacheKey(NSString *url,NSDictionary *params, NSString *method
 }
 
 #pragma mark -
+- (void)clearPrecedenceLoadKeys
+{
+    [self.yyCacheInstace.diskCache setObject:@[] forKey:BNprecedenceKeyUrlsKey];
+    [self.yyCacheInstace.diskCache setObject:@[] forKey:BNSecondPrecedenceKeyUrlsKey];
+}
+
 //register url async serial
 - (void)registerPrecedenceLoadKeyUrl:(NSString *)url params:(NSDictionary*)params method:(NSString*)method
 {
+    /*预加载策略*/
     dispatch_async(self.workQueue, ^{
         if (self.perLoadMaxCount <= 0) {
             return;
@@ -99,11 +106,12 @@ static NSString *BNCacheKey(NSString *url,NSDictionary *params, NSString *method
                         NSMutableArray *secondMArr = secondPreLoadKeys?secondPreLoadKeys.mutableCopy : @[].mutableCopy;
                         if(secondPreLoadKeys.count > self.secondPreLoadMaxCount)
                         {
+                          /*如果满了就不添加，可清空记录，或重新评估设置最大添加数*/
                             ///插入到firstPre header, 最后一个元素后移到secondPre header
-                            [firstMArr insertObject:cacheKey atIndex:0];
-                            [secondMArr insertObject:firstMArr.lastObject atIndex:0];
-                            [firstMArr removeLastObject];
-                            [secondMArr removeLastObject];
+//                            [firstMArr insertObject:cacheKey atIndex:0];
+//                            [secondMArr insertObject:firstMArr.lastObject atIndex:0];
+//                            [firstMArr removeLastObject];
+//                            [secondMArr removeLastObject];
                         }
                         else
                         {
@@ -133,6 +141,7 @@ static NSString *BNCacheKey(NSString *url,NSDictionary *params, NSString *method
 
     dispatch_async(self.workQueue, ^{
         NSArray *keyUrls = (NSArray*)[self.yyCacheInstace.diskCache objectForKey:BNSecondPrecedenceKeyUrlsKey];
+        /*这里加锁，是为了保证内存缓存在读取之前，全部加载到内存中*/
         LOCK(self.cacheSemaphore);
         [keyUrls enumerateObjectsUsingBlock:^(NSString  * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
             id object =   [self.yyCacheInstace.diskCache objectForKey:obj];
